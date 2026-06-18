@@ -149,36 +149,75 @@ button:hover{
 <script>
 document
 .getElementById("analyzeBtn")
-.addEventListener("click", () => {
+.addEventListener("click", analyzeArticle);
+
+async function analyzeArticle() {
 
     const article =
         document.getElementById("articleInput").value;
 
-    if(article.trim() === ""){
+    if (!article.trim()) {
         alert("Please paste an article.");
         return;
     }
 
-    document
-    .getElementById("result")
-    .classList
-    .remove("hidden");
+    const btn =
+        document.getElementById("analyzeBtn");
 
-    document.getElementById("title").textContent =
-        "OpenAI Launches GPT-6";
+    btn.disabled = true;
+    btn.textContent = "Analyzing...";
 
-    document.getElementById("category").textContent =
-        "Technology";
+    try {
 
-    document.getElementById("summary").textContent =
-        "OpenAI introduced GPT-6 with stronger reasoning capabilities, improved performance, and wider API availability.";
+        const response = await fetch("/api/analyze", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                article
+            })
+        });
 
-    document.getElementById("keywords").textContent =
-        "OpenAI, GPT-6, AI, LLM, Technology";
+        const data = await response.json();
 
-    document.getElementById("insight").textContent =
-        "The release highlights the growing competition in generative AI and signals increased enterprise adoption of advanced AI systems.";
-});
+        document
+        .getElementById("result")
+        .classList
+        .remove("hidden");
+
+        document.getElementById("title").textContent =
+            data.title || "N/A";
+
+        document.getElementById("category").textContent =
+            data.category || "N/A";
+
+        document.getElementById("summary").textContent =
+            data.summary || "N/A";
+
+        document.getElementById("keywords").textContent =
+            Array.isArray(data.keywords)
+            ? data.keywords.join(", ")
+            : data.keywords;
+
+        document.getElementById("insight").textContent =
+            data.insight || "N/A";
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Error analyzing article. Check console logs."
+        );
+
+    } finally {
+
+        btn.disabled = false;
+        btn.textContent = "Analyze News";
+
+    }
+}
 </script>
 
 </body>
