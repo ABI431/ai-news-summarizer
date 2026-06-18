@@ -31,7 +31,7 @@ export default async function handler(req, res) {
   
   Rules:
   - Title: Maximum 10 words.
-  - Summary: Minimum 25 , Maximum 50 words.
+  - Summary: Between 35 to 50 words.
   - Category must be one of:
   Technology, Business, Politics, Sports,
   Entertainment, Science, Health, Other.
