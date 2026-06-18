@@ -12,13 +12,21 @@ export default async function handler(req, res) {
   You are a professional news analyst.
   
   Analyze the article and return ONLY valid JSON.
+  Do not include markdown.
+  Do not include explanations.
+  Do not wrap JSON in triple backticks.
+  
+  Output format:
   
   {
-    "title":"",
-    "category":"",
-    "summary":"",
-    "keywords":["","",""],
-    "insight":""
+    "title": "string",
+  "category": "string",
+  "summary": "string",
+  "keywords":["","",""],
+  "insight": "string"
+    
+    
+
   }
   
   Rules:
@@ -57,15 +65,38 @@ export default async function handler(req, res) {
   
       const data = await response.json();
   
+      if (
+        !data.candidates ||
+        !data.candidates[0] ||
+        !data.candidates[0].content
+      ) {
+        throw new Error(
+          JSON.stringify(data, null, 2)
+        );
+      }
+      
       const text =
-        data.candidates?.[0]?.content?.parts?.[0]?.text;
+        data.candidates[0].content.parts[0].text;
   
       const cleaned = text
         .replace(/```json/g, "")
         .replace(/```/g, "")
         .trim();
   
-      const result = JSON.parse(cleaned);
+        let result;
+
+        try {
+          result = JSON.parse(cleaned);
+        } catch {
+        
+          const match = cleaned.match(/\{[\s\S]*\}/);
+        
+          if (!match) {
+            throw new Error("No JSON found in Gemini response");
+          }
+        
+          result = JSON.parse(match[0]);
+        }
   
       return res.status(200).json(result);
   
