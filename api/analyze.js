@@ -30,12 +30,16 @@ export default async function handler(req, res) {
   }
   
   Rules:
-  - Summary should contain 3-5 bullet points.
+  - Title: Maximum 10 words.
+  - Summary: Maximum 25 words.
   - Category must be one of:
   Technology, Business, Politics, Sports,
   Entertainment, Science, Health, Other.
   - Keywords should contain 5 important terms.
-  - Insight should explain the broader impact.
+  - Insight: Maximum 30 words.
+- Be concise.
+- Do not include explanations.
+- Return only JSON.
   
   Article:
   
