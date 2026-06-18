@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI News Summarizer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Space Grotesk',sans-serif;
+    background:#0B1020;
+    color:white;
+    min-height:100vh;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:40px 20px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#9ca3af;
+    margin-bottom:30px;
+}
+
+textarea{
+    width:100%;
+    height:250px;
+    background:#111827;
+    border:1px solid #374151;
+    border-radius:12px;
+    padding:20px;
+    color:white;
+    resize:none;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:#7C5CFF;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+.hidden{
+    display:none;
+}
+
+#result{
+    margin-top:30px;
+}
+
+.card{
+    background:#111827;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:15px;
+    border:1px solid #1f2937;
+}
+
+.card h3{
+    color:#7C5CFF;
+    margin-bottom:10px;
+}
+
+.card p{
+    line-height:1.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>AI News Summarizer</h1>
+
+    <p class="subtitle">
+        Paste a news article and get AI-powered insights.
+    </p>
+
+    <textarea
+        id="articleInput"
+        placeholder="Paste your article here..."
+    ></textarea>
+
+    <button id="analyzeBtn">
+        Analyze News
+    </button>
+
+    <div id="result" class="hidden">
+
+        <div class="card">
+            <h3>Title</h3>
+            <p id="title"></p>
+        </div>
+
+        <div class="card">
+            <h3>Category</h3>
+            <p id="category"></p>
+        </div>
+
+        <div class="card">
+            <h3>Summary</h3>
+            <p id="summary"></p>
+        </div>
+
+        <div class="card">
+            <h3>Keywords</h3>
+            <p id="keywords"></p>
+        </div>
+
+        <div class="card">
+            <h3>AI Insight</h3>
+            <p id="insight"></p>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+document
+.getElementById("analyzeBtn")
+.addEventListener("click", () => {
+
+    const article =
+        document.getElementById("articleInput").value;
+
+    if(article.trim() === ""){
+        alert("Please paste an article.");
+        return;
+    }
+
+    document
+    .getElementById("result")
+    .classList
+    .remove("hidden");
+
+    document.getElementById("title").textContent =
+        "OpenAI Launches GPT-6";
+
+    document.getElementById("category").textContent =
+        "Technology";
+
+    document.getElementById("summary").textContent =
+        "OpenAI introduced GPT-6 with stronger reasoning capabilities, improved performance, and wider API availability.";
+
+    document.getElementById("keywords").textContent =
+        "OpenAI, GPT-6, AI, LLM, Technology";
+
+    document.getElementById("insight").textContent =
+        "The release highlights the growing competition in generative AI and signals increased enterprise adoption of advanced AI systems.";
+});
+</script>
+
+</body>
+</html>
